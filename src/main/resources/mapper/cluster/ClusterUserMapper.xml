@@ -3,10 +3,9 @@
 <mapper namespace="com.spring.boot.mapper.cluster.ClusterUserMapper" >
     <!-- 结果映射 -->
 	<resultMap id="BaseMap" type="com.spring.boot.model.UserModel">
-	    <id column="userId" property="userId" jdbcType="INTEGER" />
-	    <result column="userName" property="userName" jdbcType="VARCHAR" />
-	    <result column="password" property="password" jdbcType="VARCHAR" />
-	    <result column="phone" property="phone" jdbcType="VARCHAR" />
+	    <id column="id" property="userId" />
+	    <result column="user_name" property="userName" />
+	    <result column="phone" property="phone" />
 	</resultMap>
     
     <!-- 表所有字段 -->
