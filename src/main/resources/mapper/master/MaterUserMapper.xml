@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.spring.boot.mapper.master.MasterUserMapper" >
+    <!-- 结果映射 -->
+	<resultMap id="BaseMap" type="com.spring.boot.model.UserModel">
+	    <id column="id" property="userId" />
+	    <result column="user_name" property="userName" />
+	    <result column="phone" property="phone" />
+	</resultMap>
+    
+    <!-- 表所有字段 -->
+    <sql id="allColumns">
+        id, user_name, phone
+    </sql>
+    
+    <!-- 查询所有数据 -->
+  	<select id="getAll" resultMap="BaseMap">
+  	  	SELECT 
+  	  	<include refid="allColumns" />
+  	  	FROM t_test_user
+  	</select>
+  	
+  	<!-- 根据主键查询数据 -->
+    <select id="get" resultMap="BaseMap" parameterType="java.util.Map">
+		SELECT
+		<include refid="allColumns" />
+		FROM
+			t_test_user u
+		WHERE
+			1 = 1 
+		AND id = #{userId}
+    </select>
+
+    <!-- 插入数据，返回主键 -->
+    <insert id="insert" parameterType="java.util.Map" useGeneratedKeys="true" keyProperty="userId" keyColumn="id">
+        INSERT INTO t_test_user (user_name,phone)
+        VALUES (
+            #{userName},
+            #{phone}
+        )
+    </insert>
+    
+ 	<!-- 修改数据 -->
+    <update id="update" parameterType="java.util.Map">
+        UPDATE t_test_user SET
+            user_name = #{userName},
+            PHONE = #{phone}
+        WHERE userId = #{userId}
+    </update>
+    
+    
+    <!-- 根据主键删除数据 -->
+    <delete id="delete" parameterType="Integer">
+        DELETE FROM t_test_user WHERE id = #{userId}
+    </delete>
+    
+</mapper>
