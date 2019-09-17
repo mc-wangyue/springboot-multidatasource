@@ -2,6 +2,8 @@ package com.spring.boot.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +20,7 @@ import com.spring.boot.model.UserModel;
 @RestController
 @RequestMapping("/")
 public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	private MasterUserMapper masterUserMapper;
@@ -25,9 +28,21 @@ public class UserController {
 	@Autowired
 	private ClusterUserMapper clusterUserMapper;
 	
+	
+    @RequestMapping("user/getAll")
+    public List<UserModel> getAll() {
+        log.info("getAll-----");
+        List<UserModel> list1 = masterUserMapper.getAll();
+        List<UserModel> list2 = clusterUserMapper.getAll();
+        list1.addAll(list2);
+        return list1;
+    }
+
+    
 	/************************主库控制层接口-start******************************/
 	@RequestMapping("user/getAllMaster")
 	public List<UserModel> getAllMaster() {
+	    log.info("getAllMaster-----");
 		return masterUserMapper.getAll();
 	}
 	
@@ -57,6 +72,7 @@ public class UserController {
 	/************************从库控制层接口-start******************************/
 	@RequestMapping("user/getAllCluster")
 	public List<UserModel> getAllCluster() {
+        log.info("getAllCluster-----");
 		return clusterUserMapper.getAll();
 	}
 	

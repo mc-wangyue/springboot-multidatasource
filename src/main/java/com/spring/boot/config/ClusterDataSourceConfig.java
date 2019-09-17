@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 
@@ -21,7 +22,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
  * @作者： Chendb
  */
 @Configuration
-@MapperScan(basePackages = "com.spring.boot.mapper.cluster",sqlSessionTemplateRef = "clusterSqlSessionTemplate")
+@MapperScan(basePackages = {"com.spring.boot.mapper.cluster"},sqlSessionTemplateRef = "clusterSqlSessionTemplate")
 public class ClusterDataSourceConfig {
 
 	/**
@@ -30,7 +31,7 @@ public class ClusterDataSourceConfig {
 	 */
 	@Bean(name = "clusterDataSource")
 	@ConfigurationProperties(prefix = "spring.datasource.cluster")
-	public DataSource masterDataSource() {
+	public DataSource clusterDataSource() {
 		return DataSourceBuilder.create().build();
 	}
 	
@@ -41,7 +42,7 @@ public class ClusterDataSourceConfig {
 	 *@return SqlSessionFactory
 	 */
 	@Bean(name = "clusterSqlSessionFactory")
-	public SqlSessionFactory masterSqlSessionFactory(@Qualifier("clusterDataSource") DataSource dataSource) throws Exception {
+	public SqlSessionFactory clusterSqlSessionFactory(@Qualifier("clusterDataSource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
 		bean.setDataSource(dataSource);
 		bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/cluster/*.xml"));
@@ -54,7 +55,7 @@ public class ClusterDataSourceConfig {
 	 *@return DataSourceTransactionManager
 	 */
 	@Bean(name = "clusterTransactionManager")
-	public DataSourceTransactionManager masterDataSourceTransactionManager(@Qualifier("clusterDataSource") DataSource dataSource) {
+	public DataSourceTransactionManager clusterDataSourceTransactionManager(@Qualifier("clusterDataSource") DataSource dataSource) {
 		return new DataSourceTransactionManager(dataSource);
 	}
 	
@@ -64,7 +65,7 @@ public class ClusterDataSourceConfig {
 	 *@return SqlSessionTemplate
 	 */
 	@Bean(name = "clusterSqlSessionTemplate")
-	public SqlSessionTemplate masterSqlSessionTemplate(@Qualifier("clusterSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
+	public SqlSessionTemplate clusterSqlSessionTemplate(@Qualifier("clusterSqlSessionFactory") SqlSessionFactory sqlSessionFactory) {
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 	
