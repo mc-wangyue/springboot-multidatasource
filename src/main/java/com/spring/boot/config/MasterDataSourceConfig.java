@@ -22,7 +22,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
  * @作者： Chendb
  */
 @Configuration
-@MapperScan(basePackages = "com.spring.boot.master.mapper",sqlSessionTemplateRef = "masterSqlSessionTemplate")
+@MapperScan(basePackages = "com.spring.boot.mapper.master",sqlSessionTemplateRef = "masterSqlSessionTemplate")
 public class MasterDataSourceConfig {
 
 	/**

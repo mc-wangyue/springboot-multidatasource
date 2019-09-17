@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @作者： Chendb
  */
 @SpringBootApplication
-@MapperScan("com.spring.boot.mapper")
+//@MapperScan("com.spring.boot.mapper")
 public class MultiDataSourceApplication {
 
 	public static void main(String[] args) {
